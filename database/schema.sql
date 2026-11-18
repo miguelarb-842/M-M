@@ -1,6 +1,7 @@
 -- ============================================================
 -- Esquema de base de datos para sistema de inventario
 -- Motor: SQLite
+-- Autor: Miguel Gutierrez, Miguel Scott, Mary Perez
 -- Generado a partir del diagrama dbdiagram.io proporcionado.
 -- ============================================================
 
