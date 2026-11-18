@@ -34,15 +34,3 @@ La base de datos tiene 17 tablas agrupadas en administración, catálogo, operac
 - Constantes: MAYÚSCULAS_CON_GUIONES_BAJOS (por ejemplo, `MARGEN_GANANCIA = 0.15`).
 
 Estas convenciones aplican al desarrollo del proyecto académico.
-
-## Modelo de datos
-
-<!-- TODO (Miguel): confirmar si Variante debe tener precio propio. -->
-
-La base de datos tiene 17 tablas agrupadas en administración, catálogo, operaciones e inventario.
-
-<!--
-Notas para el equipo de desarrollo:
-- Revisar la convención de nombres de la tabla Producto antes de la primera migración.
-- Falta definir el límite de edición del precio final.
--->
