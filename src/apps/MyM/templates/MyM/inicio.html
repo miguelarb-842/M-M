@@ -1,0 +1,40 @@
+{% extends 'MyM/base.html' %}
+
+{% block title %}Inicio | Librería M&amp;M{% endblock %}
+
+{% block contenido %}
+    <section class="hero">
+        <p class="eyebrow">Sistema gestor de inventario</p>
+        <h1>Bienvenido a Librería M&amp;M</h1>
+        <p class="hero-text">
+            Este prototipo organiza el catálogo, el inventario, las ventas y las compras
+            en módulos conectados mediante la arquitectura MTV de Django.
+        </p>
+
+        {% if modo_demo %}
+            <div class="aviso">
+                <strong>Estás en modo demostración.</strong>
+                Las pantallas se pueden recorrer sin una base de datos operativa. La información
+                que se muestre será ficticia y no se guardará ningún registro.
+            </div>
+        {% endif %}
+    </section>
+
+    <section>
+        <div class="section-heading">
+            <h2>Módulos del sistema</h2>
+            <p>Selecciona un módulo para recorrer la estructura preparada.</p>
+        </div>
+
+        <div class="grid">
+            {% for modulo in modulos %}
+                <article class="card">
+                    <span class="card-status">Estructura preparada</span>
+                    <h3>{{ modulo.nombre }}</h3>
+                    <p>{{ modulo.descripcion }}</p>
+                    <a class="boton secundario" href="{% url modulo.url %}">Abrir módulo</a>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

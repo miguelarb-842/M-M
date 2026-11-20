@@ -1,0 +1,10 @@
+{% with url_actual=request.resolver_match.url_name %}
+<nav class="nav" aria-label="Navegación principal">
+    <a class="{% if url_actual == 'inicio' %}activo{% endif %}" href="{% url 'MyM:inicio' %}">Inicio</a>
+    <a class="{% if url_actual == 'catalogo' %}activo{% endif %}" href="{% url 'MyM:catalogo' %}">Catálogo</a>
+    <a class="{% if url_actual == 'inventario' %}activo{% endif %}" href="{% url 'MyM:inventario' %}">Inventario</a>
+    <a class="{% if url_actual == 'ventas' %}activo{% endif %}" href="{% url 'MyM:ventas' %}">Ventas</a>
+    <a class="{% if url_actual == 'compras' %}activo{% endif %}" href="{% url 'MyM:compras' %}">Compras</a>
+    <a class="{% if url_actual == 'perfil' %}activo{% endif %}" href="{% url 'MyM:perfil' %}">Perfil</a>
+</nav>
+{% endwith %}

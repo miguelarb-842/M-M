@@ -1,0 +1,23 @@
+{% extends 'MyM/base.html' %}
+
+{% block title %}{{ modulo }} | Librería M&amp;M{% endblock %}
+
+{% block contenido %}
+    <section class="hero">
+        <p class="eyebrow">Módulo</p>
+        <h1>{{ modulo }}</h1>
+        <p class="hero-text">
+            La ruta, la vista y la plantilla base de este módulo ya están conectadas.
+            Su información y sus operaciones se incorporarán en la siguiente etapa.
+        </p>
+
+        <div class="aviso">
+            Esta pantalla es una estructura provisional. Todavía no consulta ni modifica
+            información de la base de datos.
+        </div>
+
+        <div class="acciones">
+            <a class="boton" href="{% url 'MyM:inicio' %}">Volver al inicio</a>
+        </div>
+    </section>
+{% endblock %}

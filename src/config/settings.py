@@ -42,6 +42,15 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'MyM.Usuario'
 
+# Rutas de autenticación propias de la aplicación.
+LOGIN_URL = 'MyM:login'
+LOGIN_REDIRECT_URL = 'MyM:inicio'
+LOGOUT_REDIRECT_URL = 'MyM:login'
+
+# Modo de demostración: permite recorrer las interfaces sin una base de datos.
+# Cambiar a False cuando exista una base de datos operativa.
+DEMO_MODE = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.MyM.context_processors.demo_mode',
             ],
         },
     },
@@ -78,7 +88,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'instance' / 'db.sqlite3',
+        # En modo demostración se usa una base en memoria para no crear archivos
+        # SQLite. Al desactivar DEMO_MODE se utiliza la base persistente.
+        'NAME': ':memory:' if DEMO_MODE else BASE_DIR / 'instance' / 'db.sqlite3',
     }
 }
 
@@ -117,7 +129,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",

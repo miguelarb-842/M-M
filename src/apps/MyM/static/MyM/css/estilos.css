@@ -1,0 +1,402 @@
+/* ============================================================
+   Estilos generales del sistema Librería M&M
+   Proyecto académico: Fundamentos de Programación con Python
+   ============================================================ */
+
+:root {
+    --crema: #f7f1e3;
+    --blanco: #ffffff;
+    --cafe: #5b3a29;
+    --cafe-claro: #8a6a55;
+    --verde: #4f6f52;
+    --verde-oscuro: #3d573f;
+    --amarillo: #e0b44c;
+    --texto: #2f2a26;
+    --texto-suave: #6b6257;
+    --borde: #d8cbb8;
+    --error: #a33a3a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--crema);
+    color: var(--texto);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.55;
+}
+
+a {
+    color: var(--verde);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--cafe);
+    line-height: 1.25;
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Aviso fijo del modo demostración */
+.demo-banner {
+    padding: 0.65rem 1rem;
+    background-color: #fff3cd;
+    border-bottom: 1px solid var(--amarillo);
+    color: #5c4a1f;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* Encabezado y navegación */
+.site-header {
+    background-color: var(--cafe);
+    color: var(--blanco);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.9rem 0;
+}
+
+.brand {
+    color: var(--blanco);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.nav a {
+    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    color: #f7f1e3;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.nav a:hover,
+.nav a.activo {
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.session {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.badge {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background-color: var(--amarillo);
+    color: var(--cafe);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.session-name {
+    color: #f7f1e3;
+}
+
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.link-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #f7f1e3;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Contenido principal */
+.main-content {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.hero {
+    margin-bottom: 1.8rem;
+    padding: 2rem;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background-color: var(--blanco);
+}
+
+.hero h1 {
+    margin-top: 0.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.hero-text {
+    max-width: 780px;
+    color: var(--texto-suave);
+}
+
+.eyebrow {
+    margin: 0;
+    color: var(--verde);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+    margin: 0;
+}
+
+.section-heading p {
+    margin: 0;
+    color: var(--texto-suave);
+}
+
+/* Tarjetas de módulos */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.2rem;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background-color: var(--blanco);
+}
+
+.card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.card p {
+    flex: 1;
+    margin-top: 0;
+    color: var(--texto-suave);
+}
+
+.card-status {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background-color: #e8f0e8;
+    color: var(--verde-oscuro);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Botones */
+.boton,
+button.boton {
+    display: inline-block;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--verde);
+    border-radius: 6px;
+    background-color: var(--verde);
+    color: var(--blanco);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.boton:hover,
+button.boton:hover {
+    background-color: var(--verde-oscuro);
+    border-color: var(--verde-oscuro);
+}
+
+.boton.secundario {
+    background-color: transparent;
+    color: var(--verde);
+}
+
+.boton.secundario:hover {
+    background-color: #e8f0e8;
+    color: var(--verde-oscuro);
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+/* Avisos y mensajes */
+.aviso {
+    margin: 1rem 0;
+    padding: 0.9rem 1rem;
+    border-left: 4px solid var(--amarillo);
+    border-radius: 6px;
+    background-color: #fff8e1;
+    color: #5c4a1f;
+}
+
+.messages {
+    margin-bottom: 1rem;
+}
+
+.message {
+    margin-bottom: 0.5rem;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    background-color: #e8f0e8;
+    color: var(--verde-oscuro);
+}
+
+.message.error {
+    background-color: #fbe9e9;
+    color: var(--error);
+}
+
+.message.warning {
+    background-color: #fff3cd;
+    color: #5c4a1f;
+}
+
+.message.info {
+    background-color: #e8eef5;
+    color: #34495e;
+}
+
+/* Formularios */
+.formulario {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background-color: var(--blanco);
+}
+
+.formulario h1 {
+    margin-top: 0.2rem;
+}
+
+.login-card {
+    max-width: 520px;
+}
+
+.campo {
+    margin-bottom: 1rem;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 0.55rem;
+    border: 1px solid #cfc2ae;
+    border-radius: 6px;
+    background-color: var(--blanco);
+    font: inherit;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: 2px solid var(--amarillo);
+    outline-offset: 1px;
+}
+
+.errores {
+    margin-top: 0.25rem;
+    color: var(--error);
+    font-size: 0.9rem;
+}
+
+.errores ul {
+    margin: 0.25rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.ayuda {
+    margin: 0.25rem 0 0;
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+}
+
+/* Tablas preparadas para los siguientes módulos */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--blanco);
+}
+
+.tabla th,
+.tabla td {
+    padding: 0.65rem;
+    border-bottom: 1px solid var(--borde);
+    text-align: left;
+}
+
+.tabla th {
+    background-color: #f1e8d8;
+    color: var(--cafe);
+}
+
+/* Pie de página */
+.site-footer {
+    padding: 1rem 0;
+    border-top: 1px solid var(--borde);
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 700px) {
+    .header-content {
+        align-items: flex-start;
+    }
+
+    .nav {
+        width: 100%;
+    }
+
+    .hero {
+        padding: 1.4rem;
+    }
+}
