@@ -20,20 +20,20 @@
     padding: 0.55rem;
     border: var(--border-width) solid var(--color-borde-campo);
     border-radius: 6px;
-    background-color: var(--blanco);
+    background-color: var(--color-blanco);
     font: inherit;
 }
 
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus {
-    outline: 2px solid var(--amarillo);
+    outline: 2px solid var(--color-amarillo);
     outline-offset: 1px;
 }
 
 .errores {
     margin-top: 0.25rem;
-    color: var(--error);
+    color: var(--color-error);
     font-size: 0.9rem;
 }
 
@@ -44,6 +44,6 @@
 
 .ayuda {
     margin: 0.25rem 0 0;
-    color: var(--texto-suave);
+    color: var(--color-texto-suave);
     font-size: 0.85rem;
 }

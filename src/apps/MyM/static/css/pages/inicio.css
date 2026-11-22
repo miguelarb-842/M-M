@@ -17,7 +17,7 @@
 
 .section-heading p {
     margin: 0;
-    color: var(--texto-suave);
+    color: var(--color-texto-suave);
 }
 
 .grid {
@@ -31,9 +31,9 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 1.2rem;
-    border: 1px solid var(--borde);
+    border: 1px solid var(--color-borde);
     border-radius: 10px;
-    background-color: var(--blanco);
+    background-color: var(--color-blanco);
 }
 
 .card h3 {
@@ -44,14 +44,14 @@
 .card p {
     flex: 1;
     margin-top: 0;
-    color: var(--texto-suave);
+    color: var(--color-texto-suave);
 }
 
 .card-status {
     padding: 0.15rem 0.5rem;
     border-radius: 999px;
     background-color: var(--color-bg-suave);
-    color: var(--verde-oscuro);
+    color: var(--color-verde-oscuro);
     font-size: 0.75rem;
     font-weight: 700;
 }
