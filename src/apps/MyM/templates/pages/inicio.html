@@ -1,4 +1,8 @@
-{% extends 'MyM/base.html' %}
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    <link rel="stylesheet" href="{% static 'css/pages/inicio.css' %}">
+{% endblock %}
 
 {% block title %}Inicio | Librería M&amp;M{% endblock %}
 

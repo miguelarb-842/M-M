@@ -65,7 +65,7 @@ def inicio(request):
     Returns:
         HttpResponse: Página de inicio con la lista de módulos disponibles.
     """
-    return render(request, 'MyM/inicio.html', {'modulos': MODULOS})
+    return render(request, 'pages/inicio.html', {'modulos': MODULOS})
 
 
 @acceso_requerido
@@ -81,7 +81,7 @@ def catalogo(request):
     Returns:
         HttpResponse: Página provisional del módulo de catálogo.
     """
-    return render(request, 'MyM/en_construccion.html', {'modulo': 'Catálogo'})
+    return render(request, 'pages/en_construccion.html', {'modulo': 'Catálogo'})
 
 
 @acceso_requerido
@@ -97,7 +97,7 @@ def inventario(request):
     Returns:
         HttpResponse: Página provisional del módulo de inventario.
     """
-    return render(request, 'MyM/en_construccion.html', {'modulo': 'Inventario'})
+    return render(request, 'pages/en_construccion.html', {'modulo': 'Inventario'})
 
 
 @acceso_requerido
@@ -113,7 +113,7 @@ def ventas(request):
     Returns:
         HttpResponse: Página provisional del módulo de ventas.
     """
-    return render(request, 'MyM/en_construccion.html', {'modulo': 'Ventas'})
+    return render(request, 'pages/en_construccion.html', {'modulo': 'Ventas'})
 
 
 @acceso_requerido
@@ -129,7 +129,7 @@ def compras(request):
     Returns:
         HttpResponse: Página provisional del módulo de compras.
     """
-    return render(request, 'MyM/en_construccion.html', {'modulo': 'Compras'})
+    return render(request, 'pages/en_construccion.html', {'modulo': 'Compras'})
 
 
 @acceso_requerido
@@ -145,7 +145,7 @@ def perfil(request):
     Returns:
         HttpResponse: Página provisional del módulo de perfil.
     """
-    return render(request, 'MyM/en_construccion.html', {'modulo': 'Perfil'})
+    return render(request, 'pages/en_construccion.html', {'modulo': 'Perfil'})
 
 
 def iniciar_sesion(request):
@@ -162,8 +162,8 @@ def iniciar_sesion(request):
         HttpResponse: Página de inicio de sesión o respuesta del LoginView.
     """
     if settings.DEMO_MODE:
-        return render(request, 'MyM/login.html')
-    return LoginView.as_view(template_name='MyM/login.html')(request)
+        return render(request, 'pages/login.html')
+    return LoginView.as_view(template_name='pages/login.html')(request)
 
 
 def cerrar_sesion(request):

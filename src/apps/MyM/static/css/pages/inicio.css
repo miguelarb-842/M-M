@@ -1,0 +1,57 @@
+/* ============================================================
+   Estilos exclusivos de la página de inicio
+   ============================================================ */
+
+.section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+    margin: 0;
+}
+
+.section-heading p {
+    margin: 0;
+    color: var(--texto-suave);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.2rem;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background-color: var(--blanco);
+}
+
+.card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.card p {
+    flex: 1;
+    margin-top: 0;
+    color: var(--texto-suave);
+}
+
+.card-status {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background-color: var(--color-bg-suave);
+    color: var(--verde-oscuro);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
