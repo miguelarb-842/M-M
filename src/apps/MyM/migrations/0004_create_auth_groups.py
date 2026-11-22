@@ -39,10 +39,14 @@ def create_groups(apps, schema_editor):
         group, _ = Group.objects.get_or_create(name=group_name)
         perms = []
         for model_name, actions in model_perms:
-            ct = ContentType.objects.get(app_label='MyM', model=model_name)
+            ct, _ = ContentType.objects.get_or_create(app_label='MyM', model=model_name)
             for action in actions:
                 codename = f'{action}_{model_name}'
-                perm = Permission.objects.get(content_type=ct, codename=codename)
+                perm, _ = Permission.objects.get_or_create(
+                    content_type=ct,
+                    codename=codename,
+                    defaults={'name': f'Can {action} {model_name}'},
+                )
                 perms.append(perm)
         group.permissions.set(perms)
 

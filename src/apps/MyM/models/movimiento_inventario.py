@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import CheckConstraint, Q
+from django.utils import timezone
 
 from .audit import Auditoria, check_auditoria
 
@@ -9,7 +10,7 @@ class MovimientoInventario(Auditoria):
     id_tipo_movimiento = models.ForeignKey('TipoMovimiento', on_delete=models.PROTECT)
     id_compra = models.ForeignKey('Compra', on_delete=models.PROTECT, null=True, blank=True)
     id_venta = models.ForeignKey('Venta', on_delete=models.PROTECT, null=True, blank=True)
-    fecha = models.DateTimeField()
+    fecha = models.DateTimeField(default=timezone.now)
     descripcion = models.CharField(max_length=254, null=True, blank=True)
 
     class Meta:
