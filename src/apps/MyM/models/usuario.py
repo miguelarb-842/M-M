@@ -38,7 +38,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin, Auditoria):
 
     id_usuario = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=128, unique=True)
-    correo_electronico = models.CharField(max_length=254, unique=True, null=True, blank=True)
+    correo_electronico = models.CharField(max_length=254, null=True, blank=True)
     numero_telefonico = models.CharField(max_length=32, null=True, blank=True)
     codigo_telefonico = models.CharField(max_length=8, default='505')
     id_compania_telefonica = models.ForeignKey('CompaniaTelefonica', on_delete=models.PROTECT, null=True, blank=True)
