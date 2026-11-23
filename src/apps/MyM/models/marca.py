@@ -11,3 +11,6 @@ class Marca(Auditoria):
     class Meta:
         db_table = 'marca'
         constraints = [check_auditoria('ck_marca_auditoria')]
+
+    def __str__(self):
+        return self.nombre

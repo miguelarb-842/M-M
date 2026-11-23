@@ -2,7 +2,7 @@ from django.urls import path
 
 from .controllers.home import inicio, perfil
 from .controllers.auth import iniciar_sesion, cerrar_sesion
-from .controllers.catalogo import catalogo
+from .controllers.catalogo import catalogo, detalle_producto
 from .controllers.inventario import inventario, listar_movimientos, detalle_movimiento, registrar_movimiento
 from .controllers.ventas import ventas
 from .controllers.compras import compras
@@ -20,6 +20,7 @@ urlpatterns = [
     path('catalogo/marca/registrar/', registrar_marca, name='registrar_marca'),
     path('catalogo/categoria/registrar/', registrar_categoria, name='registrar_categoria'),
     path('catalogo/producto/registrar/', registrar_producto, name='registrar_producto'),
+    path('catalogo/producto/<int:pk>/', detalle_producto, name='detalle_producto'),
     path('inventario/', inventario, name='inventario'),
     path('inventario/movimientos/', listar_movimientos, name='listar_movimientos'),
     path('inventario/movimiento/<int:movimiento_id>/', detalle_movimiento, name='detalle_movimiento'),

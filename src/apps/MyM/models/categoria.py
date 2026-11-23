@@ -11,3 +11,6 @@ class Categoria(Auditoria):
     class Meta:
         db_table = 'categoria'
         constraints = [check_auditoria('ck_categoria_auditoria')]
+
+    def __str__(self):
+        return self.nombre

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ producto.nombre }} | Catálogo{% endblock %}
+
+{% block contenido %}
+    <section class="catalogo">
+        <div class="section-heading">
+            <div>
+                <h1>{{ producto.nombre }}</h1>
+                <p>{{ producto.descripcion|default:"Sin descripción." }}</p>
+            </div>
+            <div class="acciones">
+                <a class="boton secundario" href="{% url 'MyM:catalogo' %}">Volver al catálogo</a>
+            </div>
+        </div>
+
+        <div class="campo" style="margin-bottom: 1rem;">
+            <span style="color: var(--color-texto-suave); font-size: var(--font-size-sm);">Marca:</span><br>
+            <strong>{{ producto.id_marca }}</strong>
+        </div>
+        <div class="campo" style="margin-bottom: 1rem;">
+            <span style="color: var(--color-texto-suave); font-size: var(--font-size-sm);">Categoría:</span><br>
+            <strong>{{ producto.id_categoria }}</strong>
+        </div>
+
+        <h3>Variantes</h3>
+        {% if variantes %}
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Variante</th>
+                        <th>Descripción</th>
+                        <th class="num">Stock actual</th>
+                        <th class="num">Stock mínimo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for variante in variantes %}
+                        <tr>
+                            <td>{{ variante.nombre }}</td>
+                            <td>{{ variante.descripcion|default:"-" }}</td>
+                            <td class="num">{{ inventarios.variante.id_variante.stock_actual|default:0 }}</td>
+                            <td class="num">{{ inventarios.variante.id_variante.stock_minimo|default:0 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="estado-vacio">
+                <p>Este producto no tiene variantes registradas.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

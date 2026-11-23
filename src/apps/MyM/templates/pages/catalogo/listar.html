@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo | Librería M&amp;M{% endblock %}
+
+{% block contenido %}
+    <section class="catalogo">
+        <div class="section-heading">
+            <div>
+                <h1>Catálogo de productos</h1>
+                <p>Lista de productos registrados con su marca y categoría.</p>
+            </div>
+            <div class="acciones">
+                <a class="boton secundario" href="{% url 'MyM:registrar_producto' %}">+ Producto</a>
+                <a class="boton secundario" href="{% url 'MyM:registrar_marca' %}">+ Marca</a>
+                <a class="boton secundario" href="{% url 'MyM:registrar_categoria' %}">+ Categoría</a>
+            </div>
+        </div>
+
+        {% if productos %}
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Marca</th>
+                        <th>Categoría</th>
+                        <th class="acciones-col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'MyM:detalle_producto' producto.id_producto %}">
+                                    {{ producto.nombre }}
+                                </a>
+                            </td>
+                            <td>{{ producto.id_marca }}</td>
+                            <td>{{ producto.id_categoria }}</td>
+                            <td>
+                                <a class="boton secundario" href="{% url 'MyM:detalle_producto' producto.id_producto %}">Ver</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="estado-vacio">
+                <p>No hay productos registrados aún.</p>
+                <a class="boton" href="{% url 'MyM:registrar_producto' %}">Registrar el primer producto</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
