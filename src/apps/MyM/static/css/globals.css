@@ -1,0 +1,271 @@
+/* ============================================================
+   Estilos globales compartidos por toda la app - Librería M&M
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-crema);
+    color: var(--color-texto);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.55;
+}
+
+a {
+    color: var(--color-verde);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--color-cafe);
+    line-height: 1.25;
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Aviso fijo del modo demostración */
+.demo-banner {
+    padding: 0.65rem 1rem;
+    background-color: var(--color-bg-demo);
+    border-bottom: 1px solid var(--color-amarillo);
+    color: var(--color-texto-demo);
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* Encabezado y navegación */
+.site-header {
+    background-color: var(--color-cafe);
+    color: var(--color-blanco);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.9rem 0;
+}
+
+.brand {
+    color: var(--color-blanco);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.nav a {
+    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    color: var(--color-crema);
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.nav a:hover,
+.nav a.activo {
+    background-color: var(--color-hover-nav);
+}
+
+.session {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.badge {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background-color: var(--color-amarillo);
+    color: var(--color-cafe);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.session-name {
+    color: var(--color-crema);
+}
+
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.link-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-crema);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Contenido principal */
+.main-content {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* Botones (compartidos entre páginas) */
+.boton,
+button.boton {
+    display: inline-block;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--color-verde);
+    border-radius: 6px;
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.boton:hover,
+button.boton:hover {
+    background-color: var(--color-verde-oscuro);
+    border-color: var(--color-verde-oscuro);
+}
+
+.boton.secundario {
+    background-color: transparent;
+    color: var(--color-verde);
+}
+
+.boton.secundario:hover {
+    background-color: var(--color-bg-suave);
+    color: var(--color-verde-oscuro);
+}
+
+/* Acciones y avisos (patrón compartido) */
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.aviso {
+    margin: 1rem 0;
+    padding: 0.9rem 1rem;
+    border-left: 4px solid var(--color-amarillo);
+    border-radius: 6px;
+    background-color: var(--color-bg-aviso);
+    color: var(--color-texto-demo);
+}
+
+/* Hero compartido entre páginas de inicio y en_construccion */
+.hero {
+    margin-bottom: 1.8rem;
+    padding: 2rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+    background-color: var(--color-blanco);
+}
+
+.hero h1 {
+    margin-top: 0.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.hero-text {
+    max-width: 780px;
+    color: var(--color-texto-suave);
+}
+
+.eyebrow {
+    margin: 0;
+    color: var(--color-verde);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Mensajes del sistema (componente _messages) */
+.messages {
+    margin-bottom: 1rem;
+}
+
+.message {
+    margin-bottom: 0.5rem;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    background-color: var(--color-bg-suave);
+    color: var(--color-verde-oscuro);
+}
+
+.message.error {
+    background-color: var(--color-bg-error);
+    color: var(--color-error);
+}
+
+.message.warning {
+    background-color: var(--color-bg-demo);
+    color: var(--color-texto-demo);
+}
+
+.message.info {
+    background-color: var(--color-bg-info);
+    color: var(--color-texto-info);
+}
+
+/* Tablas preparadas para los siguientes módulos */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-blanco);
+}
+
+.tabla th,
+.tabla td {
+    padding: 0.65rem;
+    border-bottom: 1px solid var(--color-borde);
+    text-align: left;
+}
+
+.tabla th {
+    background-color: var(--color-bg-tabla);
+    color: var(--color-cafe);
+}
+
+/* Pie de página */
+.site-footer {
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-borde);
+    color: var(--color-texto-suave);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 700px) {
+    .header-content {
+        align-items: flex-start;
+    }
+
+    .nav {
+        width: 100%;
+    }
+
+    .hero {
+        padding: 1.4rem;
+    }
+}

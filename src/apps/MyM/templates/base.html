@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Librería M&amp;M{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'MyM/css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/globals.css' %}">
+    {% block css_extra %}{% endblock %}
 </head>
 <body>
     {% if modo_demo %}
@@ -18,7 +20,7 @@
         <div class="container header-content">
             <a class="brand" href="{% url 'MyM:inicio' %}">Librería M&amp;M</a>
 
-            {% include 'MyM/partials/_nav.html' %}
+            {% include 'components/_nav.html' %}
 
             <div class="session">
                 {% if modo_demo %}
@@ -37,7 +39,7 @@
     </header>
 
     <main class="container main-content">
-        {% include 'MyM/partials/_messages.html' %}
+        {% include 'components/_messages.html' %}
         {% block contenido %}{% endblock %}
     </main>
 

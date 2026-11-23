@@ -1,0 +1,72 @@
+/* ============================================================
+   Variables del sistema - Librería M&M
+   Colores, tipografía, espaciado, bordes, sombras y dimensiones
+   ============================================================ */
+
+:root {
+    /* ---------- Colores ---------- */
+    --color-crema: #f7f1e3;
+    --color-blanco: #ffffff;
+    --color-cafe: #5b3a29;
+    --color-cafe-claro: #8a6a55;
+    --color-verde: #4f6f52;
+    --color-verde-oscuro: #3d573f;
+    --color-amarillo: #e0b44c;
+    --color-texto: #2f2a26;
+    --color-texto-suave: #6b6257;
+    --color-borde: #d8cbb8;
+    --color-error: #a33a3a;
+    --color-bg-demo: #fff3cd;
+    --color-texto-demo: #5c4a1f;
+    --color-bg-aviso: #fff8e1;
+    --color-bg-suave: #e8f0e8;
+    --color-bg-error: #fbe9e9;
+    --color-bg-info: #e8eef5;
+    --color-texto-info: #34495e;
+    --color-bg-tabla: #f1e8d8;
+    --color-borde-campo: #cfc2ae;
+    --color-hover-nav: rgba(255, 255, 255, 0.16);
+
+    /* ---------- Tipografía ---------- */
+    --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-size-xs: 0.8rem;
+    --font-size-sm: 0.85rem;
+    --font-size-base: 0.95rem;
+    --font-size-lg: 1.1rem;
+    --font-size-xl: 1.2rem;
+    --line-height-base: 1.55;
+    --line-height-tight: 1.25;
+
+    /* ---------- Espaciado ---------- */
+    --space-1: 0.15rem;
+    --space-2: 0.25rem;
+    --space-3: 0.5rem;
+    --space-4: 0.65rem;
+    --space-5: 0.9rem;
+    --space-6: 1rem;
+    --space-7: 1.2rem;
+    --space-8: 1.4rem;
+    --space-9: 1.5rem;
+    --space-10: 1.8rem;
+    --space-11: 2rem;
+    --space-12: 3rem;
+
+    /* ---------- Bordes ---------- */
+    --border-width: 1px;
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 12px;
+    --border-radius-pill: 999px;
+
+    /* ---------- Sombras ---------- */
+    --shadow-sm: none;
+    --shadow-md: none;
+
+    /* ---------- Dimensiones ---------- */
+    --width-container: 92%;
+    --max-width-container: 1100px;
+    --max-width-form: 560px;
+    --max-width-login: 520px;
+    --max-width-hero-text: 780px;
+    --min-width-card: 230px;
+}

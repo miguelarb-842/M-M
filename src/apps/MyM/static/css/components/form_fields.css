@@ -1,0 +1,49 @@
+/* ============================================================
+   Estilos del componente de campos de formulario
+   Usado por: components/_form_fields.html (página de login)
+   ============================================================ */
+
+.campo {
+    margin-bottom: 1rem;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 0.55rem;
+    border: var(--border-width) solid var(--color-borde-campo);
+    border-radius: 6px;
+    background-color: var(--color-blanco);
+    font: inherit;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: 2px solid var(--color-amarillo);
+    outline-offset: 1px;
+}
+
+.errores {
+    margin-top: 0.25rem;
+    color: var(--color-error);
+    font-size: 0.9rem;
+}
+
+.errores ul {
+    margin: 0.25rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.ayuda {
+    margin: 0.25rem 0 0;
+    color: var(--color-texto-suave);
+    font-size: 0.85rem;
+}

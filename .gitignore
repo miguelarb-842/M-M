@@ -120,7 +120,8 @@ venv.bak/
 *.stTheme.cache 
 *.sublime-workspace 
 *.sublime-project 
-
+.playwright-cli
+.tgrep
 # sftp configuration file 
 sftp-config.json 
 

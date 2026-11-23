@@ -1,4 +1,10 @@
-{% extends 'MyM/base.html' %}
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/components/form_fields.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/login.css' %}">
+{% endblock %}
 
 {% block title %}Acceso | Librería M&amp;M{% endblock %}
 
@@ -23,7 +29,7 @@
             <p>Ingresa tus credenciales para acceder al sistema.</p>
             <form method="post" novalidate>
                 {% csrf_token %}
-                {% include 'MyM/partials/_form_fields.html' with form=form %}
+                {% include 'components/_form_fields.html' with form=form %}
                 <div class="acciones">
                     <button class="boton" type="submit">Entrar</button>
                 </div>

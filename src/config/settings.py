@@ -49,7 +49,8 @@ LOGOUT_REDIRECT_URL = 'MyM:login'
 
 # Modo de demostración: permite recorrer las interfaces sin una base de datos.
 # Cambiar a False cuando exista una base de datos operativa.
-DEMO_MODE = True
+DEMO_MODE = False
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
