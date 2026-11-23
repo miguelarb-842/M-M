@@ -8,3 +8,6 @@ class TipoMovimiento(models.Model):
 
     class Meta:
         db_table = 'tipo_movimiento'
+
+    def __str__(self):
+        return self.nombre

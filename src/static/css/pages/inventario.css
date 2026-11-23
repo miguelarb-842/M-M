@@ -1,0 +1,115 @@
+/* ============================================================
+   Estilos exclusivas del módulo de inventario
+   (la tabla, .campo y .errores ya están en globals.css y form_fields.css)
+   ============================================================ */
+
+/* Fila con stock por debajo del mínimo */
+.stock-bajo {
+    background-color: var(--color-bg-error);
+}
+
+/* Estado de la fila: OK / Stock bajo */
+.estado {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--border-radius-pill);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.estado.bajo {
+    background-color: var(--color-bg-error);
+    color: var(--color-error);
+}
+
+.estado.ok {
+    background-color: var(--color-bg-suave);
+    color: var(--color-verde-oscuro);
+}
+
+/* Metadatos del detalle de movimiento */
+.metadatos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-blanco);
+}
+
+.metadatos div {
+    min-width: 0;
+}
+
+.metadatos dt {
+    color: var(--color-texto-suave);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.metadatos dd {
+    margin: 0.2rem 0 0;
+    color: var(--color-texto);
+    overflow-wrap: break-word;
+}
+
+.metadatos div:last-child {
+    grid-column: 1 / -1;
+}
+
+/* Filas de detalle del formulario de movimiento */
+.detalle-fila {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 9rem auto;
+    gap: 0.75rem;
+    align-items: end;
+    padding: 0.9rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-blanco);
+}
+
+.detalle-fila .campo {
+    margin-bottom: 0;
+}
+
+/* El checkbox DELETE lo marca el botón "Quitar": sigue en el envío pero fuera de la cuadrícula */
+.detalle-fila input[type="checkbox"][name$="-DELETE"] {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.detalle-fila .errores {
+    grid-column: 1 / -1;
+}
+
+#agregar-detalle {
+    margin-bottom: 1rem;
+}
+
+/* El formulario se mantiene legible en pantallas angostas */
+#form-movimiento {
+    max-width: var(--max-width-form);
+}
+
+@media (max-width: 700px) {
+    .detalle-fila {
+        grid-template-columns: 1fr;
+    }
+
+    .detalle-fila .boton-outline {
+        width: 100%;
+    }
+}

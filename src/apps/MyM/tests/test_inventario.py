@@ -202,6 +202,25 @@ class InventarioServiceTest(TestCase):
         self.assertEqual(detalle.id_variante, self.variante)
         self.assertEqual(detalle.cantidad, Decimal('4'))
 
+    def test_variante_repetida_se_agrupa_en_un_detalle(self):
+        """Si una variante se repite en varios detalles, se agrupan sus cantidades en una sola línea."""
+        inv_service.crear_inventario(self.variante, Decimal('10'), Decimal('5'), self.usuario)
+        movimiento = inv_service.registrar_movimiento(
+            self.tipo_entrada,
+            '2026-11-22 17:00:00',
+            'Variante repetida',
+            [
+                {'variante': self.variante, 'cantidad': Decimal('3')},
+                {'variante': self.variante, 'cantidad': Decimal('7')},
+            ],
+            self.usuario,
+        )
+        detalles = DetalleMovimiento.objects.filter(id_movimiento_inventario=movimiento)
+        self.assertEqual(detalles.count(), 1)
+        self.assertEqual(detalles.get().cantidad, Decimal('10'))
+        inventario = Inventario.objects.get(id_variante=self.variante)
+        self.assertEqual(inventario.stock_actual, Decimal('20'))
+
     def test_rollback_por_fallo_en_segundo_detalle(self):
         """Si falla el segundo detalle de un movimiento, nada se guarda (rollback atómico)."""
         inv_service.crear_inventario(self.variante, Decimal('10'), Decimal('5'), self.usuario)

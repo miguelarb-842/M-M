@@ -70,7 +70,7 @@ h3 {
 }
 
 .nav a {
-    padding: 0.35rem 0.55rem;
+    padding: 0.55rem 0.75rem;
     border-radius: 6px;
     color: var(--color-crema);
     font-size: 0.95rem;
@@ -80,6 +80,20 @@ h3 {
 .nav a:hover,
 .nav a.activo {
     background-color: var(--color-hover-nav);
+}
+
+/* Foco visible para navegación con teclado */
+a:focus-visible,
+button:focus-visible,
+.boton:focus-visible,
+.link-button:focus-visible {
+    outline: 2px solid var(--color-amarillo);
+    outline-offset: 2px;
+}
+
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+    outline-color: var(--color-blanco);
 }
 
 .session {
@@ -108,13 +122,65 @@ h3 {
 }
 
 .link-button {
-    padding: 0;
+    padding: 0.35rem 0.25rem;
     border: 0;
     background: none;
     color: var(--color-crema);
     font: inherit;
     text-decoration: underline;
     cursor: pointer;
+}
+
+/* Texto disponible para lectores de pantalla pero no visible */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Encabezado de sección: título + descripción a la izquierda, acciones a la derecha */
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.section-heading h1,
+.section-heading h2 {
+    margin: 0;
+}
+
+.section-heading p {
+    margin: 0.25rem 0 0;
+    color: var(--color-texto-suave);
+}
+
+.section-heading .acciones {
+    margin-top: 0;
+}
+
+/* Estados vacíos: no son avisos, invitan a crear el primer registro */
+.estado-vacio {
+    margin: 1rem 0;
+    padding: 1.5rem 1rem;
+    border: 1px dashed var(--color-borde);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-blanco);
+    color: var(--color-texto-suave);
+    text-align: center;
+}
+
+.estado-vacio .boton {
+    margin-top: 0.9rem;
 }
 
 /* Contenido principal */
@@ -152,6 +218,36 @@ button.boton:hover {
 .boton.secundario:hover {
     background-color: var(--color-bg-suave);
     color: var(--color-verde-oscuro);
+}
+
+/* Botón de acción secundaria dentro de formularios (Quitar fila, etc.) */
+.boton-outline {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--color-borde-campo);
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--color-texto-suave);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.boton-outline:hover {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background-color: var(--color-bg-error);
+}
+
+/* Solo queda una fila de detalle: no se puede quitar */
+.boton-outline:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.boton-outline:disabled:hover {
+    border-color: var(--color-borde-campo);
+    color: var(--color-texto-suave);
+    background-color: transparent;
 }
 
 /* Acciones y avisos (patrón compartido) */
@@ -246,6 +342,22 @@ button.boton:hover {
     color: var(--color-cafe);
 }
 
+.tabla tbody tr:hover {
+    background-color: var(--color-bg-suave);
+}
+
+/* Columnas numéricas: se alinean a la derecha para comparar de un vistazo */
+.tabla .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* La última columna de acciones no necesita cabecera visible */
+.tabla th.acciones-col {
+    width: 1%;
+    white-space: nowrap;
+}
+
 /* Pie de página */
 .site-footer {
     padding: 1rem 0;
@@ -263,9 +375,21 @@ button.boton:hover {
 
     .nav {
         width: 100%;
+        gap: 0.15rem;
     }
 
     .hero {
         padding: 1.4rem;
+    }
+
+    /* En pantallas angostas las acciones del encabezado pasan a su propia fila */
+    .section-heading .acciones {
+        width: 100%;
+    }
+
+    .tabla {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }

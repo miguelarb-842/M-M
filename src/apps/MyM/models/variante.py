@@ -16,3 +16,6 @@ class Variante(Auditoria):
             UniqueConstraint(fields=['id_producto', 'nombre'], name='ck_variante_producto_nombre'),
             check_auditoria('ck_variante_auditoria'),
         ]
+
+    def __str__(self):
+        return f'{self.id_producto.nombre} - {self.nombre}'

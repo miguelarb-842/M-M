@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/pages/inventario.css' %}">
+{% endblock %}
+
+{% block title %}Detalle movimiento | Inventario{% endblock %}
+
+{% block contenido %}
+    <section class="inventario">
+        <div class="section-heading">
+            <div>
+                <h1>Detalle del movimiento</h1>
+            </div>
+            <div class="acciones">
+                <a class="boton secundario" href="{% url 'MyM:listar_movimientos' %}">Volver a movimientos</a>
+            </div>
+        </div>
+
+        <dl class="metadatos">
+            <div>
+                <dt>Tipo</dt>
+                <dd>{{ movimiento.id_tipo_movimiento.nombre }}</dd>
+            </div>
+            <div>
+                <dt>Fecha</dt>
+                <dd>{{ movimiento.fecha|date:"d/m/Y H:i" }}</dd>
+            </div>
+            <div>
+                <dt>Usuario</dt>
+                <dd>{{ movimiento.creado_por.get_username }}</dd>
+            </div>
+            <div>
+                <dt>Descripción</dt>
+                <dd>{{ movimiento.descripcion|default:"Sin descripción" }}</dd>
+            </div>
+        </dl>
+
+        <h2>Detalles</h2>
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th scope="col">Variante</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col" class="num">Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for det in detalles %}
+                    <tr>
+                        <td>{{ det.id_variante.nombre }}</td>
+                        <td>{{ det.id_variante.id_producto.nombre }}</td>
+                        <td class="num">{{ det.cantidad }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Este movimiento no tiene detalles registrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

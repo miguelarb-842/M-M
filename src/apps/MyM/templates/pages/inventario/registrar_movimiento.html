@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/components/form_fields.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/inventario.css' %}">
+{% endblock %}
+
+{% block title %}Registrar movimiento | Inventario{% endblock %}
+
+{% block contenido %}
+    <section class="inventario">
+        <div class="section-heading">
+            <div>
+                <h1>Registrar movimiento</h1>
+                <p>Selecciona el tipo y agrega uno o más detalles (variante + cantidad).</p>
+            </div>
+            <div class="acciones">
+                <a class="boton secundario" href="{% url 'MyM:inventario' %}">Volver al inventario</a>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="errores">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <form method="post" novalidate id="form-movimiento">
+            {% csrf_token %}
+            {{ form.management_form }}
+            {{ formset.management_form }}
+
+            <div class="campo">
+                {{ form.tipo_movimiento.label_tag }}
+                {{ form.tipo_movimiento }}
+                {% if form.tipo_movimiento.errors %}
+                    <div class="errores">{{ form.tipo_movimiento.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="campo">
+                {{ form.descripcion.label_tag }}
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}
+                    <div class="errores">{{ form.descripcion.errors }}</div>
+                {% endif %}
+            </div>
+
+            <h3>Detalles del movimiento</h3>
+            <div id="detalles-container">
+                {% for detalle_form in formset %}
+                    <div class="detalle-fila" id="detalle-{{ forloop.counter0 }}">
+                        <div class="campo">
+                            {{ detalle_form.variante.label_tag }}
+                            {{ detalle_form.variante }}
+                        </div>
+                        <div class="campo">
+                            {{ detalle_form.cantidad.label_tag }}
+                            {{ detalle_form.cantidad }}
+                        </div>
+                        <button type="button" class="boton-outline remover-detalle">Quitar</button>
+                        {% if detalle_form.variante.errors or detalle_form.cantidad.errors %}
+                            <div class="errores">{{ detalle_form.variante.errors }}{{ detalle_form.cantidad.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="button" class="boton secundario" id="agregar-detalle">+ Agregar detalle</button>
+
+            <div class="acciones">
+                <button class="boton" type="submit">Registrar movimiento</button>
+            </div>
+        </form>
+    </section>
+
+    <template id="plantilla-detalle">
+        <div class="campo">
+            <label for="id_detalles-__prefix__-variante">Variante</label>
+            <select name="detalles-__prefix__-variante" id="id_detalles-__prefix__-variante">
+                <option value="">Selecciona una opción</option>
+                {% for variante in formset.empty_form.variante.field.queryset %}
+                    <option value="{{ variante.pk }}">{{ variante }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="campo">
+            <label for="id_detalles-__prefix__-cantidad">Cantidad</label>
+            <input type="number" name="detalles-__prefix__-cantidad" id="id_detalles-__prefix__-cantidad" step="0.01" min="0">
+        </div>
+        <button type="button" class="boton-outline remover-detalle">Quitar</button>
+    </template>
+
+    <script>
+        (function () {
+            var container = document.getElementById('detalles-container');
+            var agregarBtn = document.getElementById('agregar-detalle');
+            var totalInput = document.getElementById('id_detalles-TOTAL_FORMS');
+
+            // Django lee los campos por índice (detalles-0-*, detalles-1-*, ...) y corta
+            // en TOTAL_FORMS: sin índices contiguos y TOTAL_FORMS sincronizado, las filas
+            // agregadas se envían pero el servidor las ignora.
+            function sincronizar() {
+                var filas = Array.prototype.slice.call(container.querySelectorAll('.detalle-fila'));
+                filas.forEach(function (fila, i) {
+                    fila.id = 'detalle-' + i;
+                    fila.querySelectorAll('[name^="detalles-"]').forEach(function (el) {
+                        el.name = el.name.replace(/^detalles-\d+-/, 'detalles-' + i + '-');
+                    });
+                    fila.querySelectorAll('[id^="id_detalles-"]').forEach(function (el) {
+                        el.id = el.id.replace(/^id_detalles-\d+-/, 'id_detalles-' + i + '-');
+                    });
+                    fila.querySelectorAll('label[for^="id_detalles-"]').forEach(function (lbl) {
+                        lbl.htmlFor = lbl.htmlFor.replace(/^id_detalles-\d+-/, 'id_detalles-' + i + '-');
+                    });
+                    // El movimiento siempre necesita al menos una línea de detalle.
+                    var quitar = fila.querySelector('.remover-detalle');
+                    if (quitar) quitar.disabled = filas.length === 1;
+                });
+                totalInput.value = filas.length;
+            }
+
+            agregarBtn.addEventListener('click', function () {
+                var idx = container.querySelectorAll('.detalle-fila').length;
+                var div = document.createElement('div');
+                div.className = 'detalle-fila';
+                div.innerHTML = document.getElementById('plantilla-detalle').innerHTML
+                    .replace(/__prefix__/g, idx);
+                container.appendChild(div);
+                sincronizar();
+            });
+
+            container.addEventListener('click', function (e) {
+                var btn = e.target.closest('.remover-detalle');
+                if (!btn) return;
+                var fila = btn.closest('.detalle-fila');
+                if (!fila || container.querySelectorAll('.detalle-fila').length === 1) return;
+                fila.remove();
+                sincronizar();
+            });
+
+            sincronizar();
+        })();
+    </script>
+{% endblock %}

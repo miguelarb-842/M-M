@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/pages/inventario.css' %}">
+{% endblock %}
+
+{% block title %}Movimientos | Inventario{% endblock %}
+
+{% block contenido %}
+    <section class="inventario">
+        <div class="section-heading">
+            <div>
+                <h1>Movimientos de inventario</h1>
+                <p>Historial de entradas, salidas y ajustes de stock.</p>
+            </div>
+            <div class="acciones">
+                <a class="boton" href="{% url 'MyM:registrar_movimiento' %}">Registrar movimiento</a>
+                <a class="boton secundario" href="{% url 'MyM:inventario' %}">Volver al inventario</a>
+            </div>
+        </div>
+
+        {% if movimientos %}
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mov in movimientos %}
+                        <tr class="fila-movimiento" data-url="{% url 'MyM:detalle_movimiento' mov.id_movimiento_inventario %}">
+                            <td>{{ mov.fecha|date:"d/m/Y H:i" }}</td>
+                            <td>{{ mov.id_tipo_movimiento.nombre }}</td>
+                            <td>{{ mov.descripcion|default:"—" }}</td>
+                            <td>{{ mov.creado_por.get_username }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="estado-vacio">
+                <p>Todavía no hay movimientos de inventario.</p>
+                <a class="boton" href="{% url 'MyM:registrar_movimiento' %}">Registrar un movimiento</a>
+            </div>
+        {% endif %}
+    </section>
+
+    <style>
+        .fila-movimiento {
+            cursor: pointer;
+        }
+        .fila-movimiento:hover {
+            background: #f5f7fa;
+        }
+    </style>
+
+    <script>
+        document.querySelectorAll('.fila-movimiento').forEach(function (fila) {
+            fila.addEventListener('click', function () {
+                var url = fila.getAttribute('data-url');
+                if (url) {
+                    window.location = url;
+                }
+            });
+        });
+    </script>
+{% endblock %}

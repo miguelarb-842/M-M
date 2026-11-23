@@ -1,6 +1,9 @@
+from decimal import Decimal
+
 from django.db import transaction
 from django.utils import timezone
 
+from ..models import MovimientoInventario
 from ..repositories import inventario as inv_repo
 
 
@@ -36,6 +39,24 @@ def listar_inventarios():
     return inv_repo.listar_inventarios()
 
 
+def listar_movimientos():
+    return inv_repo.listar_movimientos()
+
+
+def obtener_movimiento_con_detalles(movimiento_id):
+    """
+    Devuelve (movimiento, detalles) para un movimiento dado.
+    Lanza ValueError si el movimiento no existe.
+    """
+    try:
+        movimiento = inv_repo.obtener_movimiento_por_id(movimiento_id)
+    except MovimientoInventario.DoesNotExist:
+        raise ValueError(f'El movimiento con id {movimiento_id} no existe')
+
+    detalles = movimiento.detallemovimiento_set.select_related('id_variante').all()
+    return movimiento, detalles
+
+
 def registrar_movimiento(tipo_movimiento, fecha, descripcion, detalles, usuario, id_compra=None, id_venta=None):
     """
     Registra un movimiento de inventario con sus detalles y actualiza el stock automáticamente.
@@ -46,6 +67,16 @@ def registrar_movimiento(tipo_movimiento, fecha, descripcion, detalles, usuario,
     """
     if not detalles:
         raise ValueError('El movimiento debe tener al menos un detalle')
+
+    # Un movimiento solo permite un detalle por variante (restricción única en
+    # detalle_movimiento). Si una variante se repite en varias filas del formset,
+    # se agrupan sus cantidades en una sola línea para no violar la restricción.
+    detalles_por_variante = {}
+    for detalle in detalles:
+        variante = detalle['variante']
+        cantidad = detalle['cantidad'] or Decimal('0')
+        detalles_por_variante[variante] = detalles_por_variante.get(variante, Decimal('0')) + cantidad
+    detalles = [{'variante': variante, 'cantidad': cantidad} for variante, cantidad in detalles_por_variante.items()]
 
     if fecha is None:
         fecha = timezone.now()

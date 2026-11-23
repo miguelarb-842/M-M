@@ -66,6 +66,18 @@ def listar_inventarios():
     return Inventario.objects.select_related('id_variante').all()
 
 
+def listar_movimientos():
+    return MovimientoInventario.objects.select_related(
+        'id_tipo_movimiento', 'creado_por'
+    ).order_by('-fecha').all()
+
+
+def obtener_movimiento_por_id(movimiento_id):
+    return MovimientoInventario.objects.select_related(
+        'id_tipo_movimiento', 'creado_por'
+    ).get(pk=movimiento_id)
+
+
 def crear_movimiento(tipo_movimiento, fecha, descripcion, creado_por, id_compra=None, id_venta=None):
     if id_compra is not None:
         from ..models import Compra
