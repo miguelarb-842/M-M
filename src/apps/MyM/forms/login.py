@@ -13,10 +13,10 @@ class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=128,
         label='Nombre de usuario',
-        widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario'}),
+        widget=forms.TextInput(attrs={'placeholder': 'Nombre de usuario', 'autocomplete': 'username'}),
     )
 
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña', 'autocomplete': 'current-password'}),
         label='Contraseña',
     )
