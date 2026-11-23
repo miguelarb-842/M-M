@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/components/form_fields.css' %}">
+{% endblock %}
+
+{% block title %}Registrar producto | Catálogo{% endblock %}
+
+{% block contenido %}
+    <section class="catalogo">
+        <div class="section-heading">
+            <div>
+                <h1>Registrar producto</h1>
+                <p>Ingresa los datos del producto y al menos una variante.</p>
+            </div>
+            <div class="acciones">
+                <a class="boton secundario" href="{% url 'MyM:catalogo' %}">Volver al catálogo</a>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="errores">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <form method="post" novalidate id="form-producto">
+            {% csrf_token %}
+            {{ form.management_form }}
+            {{ formset.management_form }}
+
+            {% include 'components/_form_fields.html' with form=form %}
+
+            <h3>Variantes</h3>
+            <p>Agrega al menos una variante del producto (ej. talla, color).</p>
+            <div id="variantes-container">
+                {% for detalle_form in formset %}
+                    <div class="variante-fila" id="variante-{{ forloop.counter0 }}">
+                        <div class="campo">
+                            {{ detalle_form.nombre.label_tag }}
+                            {{ detalle_form.nombre }}
+                            {% if detalle_form.nombre.errors %}
+                                <div class="errores">{{ detalle_form.nombre.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="campo">
+                            {{ detalle_form.descripcion.label_tag }}
+                            {{ detalle_form.descripcion }}
+                            {% if detalle_form.descripcion.errors %}
+                                <div class="errores">{{ detalle_form.descripcion.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% if detalle_form.id %}
+                            <input type="hidden" name="{{ detalle_form.id.name }}" value="{{ detalle_form.id.value }}">
+                        {% endif %}
+                        <input type="hidden" name="{{ detalle_form.DELETE.name }}" value="{{ detalle_form.DELETE.value }}" class="delete-flag">
+                        <button type="button" class="boton-outline remover-variante">Quitar</button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="button" class="boton secundario" id="agregar-variante">+ Agregar variante</button>
+
+            <div class="acciones">
+                <button class="boton" type="submit">Registrar producto</button>
+            </div>
+        </form>
+    </section>
+
+    <template id="plantilla-variante">
+        <div class="campo">
+            <label>Nombre de la variante</label>
+            <input type="text" name="variantes-__prefix__-nombre" required placeholder="Ej. Talla M">
+        </div>
+        <div class="campo">
+            <label>Descripción</label>
+            <input type="text" name="variantes-__prefix__-descripcion" placeholder="Descripción opcional">
+        </div>
+        <input type="hidden" name="variantes-__prefix__-DELETE" value="false" class="delete-flag">
+        <button type="button" class="boton-outline remover-variante">Quitar</button>
+    </template>
+
+    <script>
+        (function () {
+            var container = document.getElementById('variantes-container');
+            var agregarBtn = document.getElementById('agregar-variante');
+            var totalInput = document.getElementById('id_variantes-TOTAL_FORMS');
+
+            function sincronizar() {
+                var filas = Array.prototype.slice.call(container.querySelectorAll('.variante-fila'));
+                filas.forEach(function (fila, i) {
+                    fila.id = 'variante-' + i;
+                    fila.querySelectorAll('[name^="variantes-"]').forEach(function (el) {
+                        el.name = el.name.replace(/^variantes-\d+-/, 'variantes-' + i + '-');
+                    });
+                    fila.querySelectorAll('[id^="id_variantes-"]').forEach(function (el) {
+                        el.id = el.id.replace(/^id_variantes-\d+-/, 'id_variantes-' + i + '-');
+                    });
+                    fila.querySelectorAll('label[for^="id_variantes-"]').forEach(function (lbl) {
+                        lbl.htmlFor = lbl.htmlFor.replace(/^id_variantes-\d+-/, 'id_variantes-' + i + '-');
+                    });
+                    var quitar = fila.querySelector('.remover-variante');
+                    if (quitar) quitar.disabled = filas.length === 1;
+                });
+                totalInput.value = filas.length;
+            }
+
+            agregarBtn.addEventListener('click', function () {
+                var idx = container.querySelectorAll('.variante-fila').length;
+                var div = document.createElement('div');
+                div.className = 'variante-fila';
+                div.innerHTML = document.getElementById('plantilla-variante').innerHTML
+                    .replace(/__prefix__/g, idx);
+                container.appendChild(div);
+                sincronizar();
+            });
+
+            container.addEventListener('click', function (e) {
+                var btn = e.target.closest('.remover-variante');
+                if (!btn) return;
+                var filas = container.querySelectorAll('.variante-fila');
+                if (filas.length <= 1) return;
+                var fila = btn.closest('.variante-fila');
+                var flag = fila.querySelector('.delete-flag');
+                if (flag) flag.value = 'true';
+                fila.style.display = 'none';
+                sincronizar();
+            });
+
+            sincronizar();
+        })();
+    </script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/components/form_fields.css' %}">
+{% endblock %}
+
+{% block title %}Registrar marca | Catálogo{% endblock %}
+
+{% block contenido %}
+    <section class="catalogo">
+        <div class="section-heading">
+            <div>
+                <h1>Registrar marca</h1>
+                <p>Ingresa los datos de la nueva marca.</p>
+            </div>
+            <div class="acciones">
+                <a class="boton secundario" href="{% url 'MyM:catalogo' %}">Volver al catálogo</a>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="errores">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% include 'components/_form_fields.html' with form=form %}
+
+            <div class="acciones">
+                <button class="boton" type="submit">Registrar marca</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

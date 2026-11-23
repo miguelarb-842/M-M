@@ -6,6 +6,9 @@ from .controllers.catalogo import catalogo
 from .controllers.inventario import inventario, listar_movimientos, detalle_movimiento, registrar_movimiento
 from .controllers.ventas import ventas
 from .controllers.compras import compras
+from .controllers.marca import registrar_marca
+from .controllers.categoria import registrar_categoria
+from .controllers.producto import registrar_producto
 
 app_name = 'MyM'
 
@@ -14,6 +17,9 @@ urlpatterns = [
     path('login/', iniciar_sesion, name='login'),
     path('logout/', cerrar_sesion, name='logout'),
     path('catalogo/', catalogo, name='catalogo'),
+    path('catalogo/marca/registrar/', registrar_marca, name='registrar_marca'),
+    path('catalogo/categoria/registrar/', registrar_categoria, name='registrar_categoria'),
+    path('catalogo/producto/registrar/', registrar_producto, name='registrar_producto'),
     path('inventario/', inventario, name='inventario'),
     path('inventario/movimientos/', listar_movimientos, name='listar_movimientos'),
     path('inventario/movimiento/<int:movimiento_id>/', detalle_movimiento, name='detalle_movimiento'),
