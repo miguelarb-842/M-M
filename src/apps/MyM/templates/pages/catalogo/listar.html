@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
+{% block css_extra %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/components/modulos.css' %}">
+{% endblock %}
+
 {% block title %}Catálogo | Librería M&amp;M{% endblock %}
 
 {% block contenido %}
-    <section class="catalogo">
+    <section class="seccion">
         <div class="section-heading">
             <div>
                 <h1>Catálogo de productos</h1>

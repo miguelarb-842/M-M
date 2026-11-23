@@ -1,0 +1,62 @@
+/* ============================================================
+   Estilos compartidos de módulos (catálogo e inventario)
+   Lenguaje visual único: secciones, estados de tabla, metadatos
+   ============================================================ */
+
+/* Contenedor de sección de módulo (reemplaza .inventario y .catalogo) */
+.seccion {
+    margin-bottom: 1.5rem;
+}
+
+/* Badges de estado en tablas */
+.estado {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.estado.ok {
+    background-color: var(--color-bg-suave);
+    color: var(--color-verde-oscuro);
+}
+
+.estado.bajo {
+    background-color: var(--color-bg-error);
+    color: var(--color-error);
+}
+
+/* Fila de tabla con stock bajo */
+.stock-bajo {
+    background-color: var(--color-bg-error);
+}
+
+/* Lista de metadatos para vistas de detalle */
+.metadatos {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metadatos dt {
+    margin: 0;
+    color: var(--color-texto-suave);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.metadatos dd {
+    margin: 0;
+    color: var(--color-texto);
+}
+
+/* Filas de tabla clickeables (detalle) */
+.fila-clickeable {
+    cursor: pointer;
+}
+
+.fila-clickeable:hover {
+    background-color: var(--color-bg-suave);
+}
