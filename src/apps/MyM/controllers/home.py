@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -33,13 +32,6 @@ MODULOS = [
 
 
 def acceso_requerido(vista):
-    """
-    Permitir el acceso a las vistas sin autenticación cuando se usa el
-    modo demostración, y exigir el inicio de sesión cuando se trabaja
-    con la aplicación real.
-    """
-    if settings.DEMO_MODE:
-        return vista
     return login_required(vista)
 
 

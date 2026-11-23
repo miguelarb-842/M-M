@@ -6,8 +6,6 @@ from ..services import auth as auth_service
 
 
 def iniciar_sesion(request):
-    if settings.DEMO_MODE:
-        return render(request, 'pages/login.html')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -24,7 +22,5 @@ def iniciar_sesion(request):
 
 
 def cerrar_sesion(request):
-    if settings.DEMO_MODE:
-        return redirect('MyM:inicio')
     auth_service.cerrar_sesion(request)
     return redirect(settings.LOGOUT_REDIRECT_URL)

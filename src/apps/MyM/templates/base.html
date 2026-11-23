@@ -10,12 +10,6 @@
     {% block css_extra %}{% endblock %}
 </head>
 <body>
-    {% if modo_demo %}
-        <div class="demo-banner" role="status">
-            <strong>Modo demostración:</strong> los datos son ficticios y no se guardan en la base de datos.
-        </div>
-    {% endif %}
-
     <header class="site-header">
         <div class="container header-content">
             <a class="brand" href="{% url 'MyM:inicio' %}">Librería M&amp;M</a>
@@ -23,9 +17,7 @@
             {% include 'components/_nav.html' %}
 
             <div class="session">
-                {% if modo_demo %}
-                    <span class="badge">{{ usuario_demo }}</span>
-                {% elif user.is_authenticated %}
+                {% if user.is_authenticated %}
                     <span class="session-name">{{ user.get_username }}</span>
                     <form class="inline-form" method="post" action="{% url 'MyM:logout' %}">
                         {% csrf_token %}
