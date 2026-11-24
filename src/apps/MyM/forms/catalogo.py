@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django import forms
 from django.forms import formset_factory
 
@@ -87,10 +89,12 @@ class ProductoForm(forms.Form):
 class VarianteForm(forms.Form):
     """
     Propósito:
-        Una línea de detalle de un producto: nombre y descripción de la variante.
+        Una línea de detalle de un producto: nombre, descripción y stock
+        mínimo de la variante. El stock mínimo se guarda en la tabla de
+        inventario de la variante.
 
     Returns:
-        VarianteForm: nombre y descripcion.
+        VarianteForm: nombre, descripcion y stock_minimo.
     """
 
     nombre = forms.CharField(
@@ -104,6 +108,18 @@ class VarianteForm(forms.Form):
         required=False,
         label='Descripción',
         widget=forms.TextInput(attrs={'placeholder': 'Descripción opcional'}),
+    )
+    stock_minimo = forms.DecimalField(
+        min_value=0,
+        decimal_places=2,
+        required=False,
+        initial=Decimal('0'),
+        label='Stock mínimo',
+        widget=forms.NumberInput(attrs={'step': '0.01', 'min': '0', 'placeholder': '0'}),
+    )
+    id = forms.IntegerField(
+        required=False,
+        widget=forms.HiddenInput(),
     )
 
 

@@ -3,13 +3,13 @@
 {% block css_extra %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/components/form_fields.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/modulos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/inventario.css' %}">
 {% endblock %}
 
 {% block title %}Registrar movimiento | Inventario{% endblock %}
 
 {% block contenido %}
-    <section class="seccion">
+    <section class="inventario">
         <div class="section-heading">
             <div>
                 <h1>Registrar movimiento</h1>
@@ -20,23 +20,47 @@
             </div>
         </div>
 
+        {% if form.non_field_errors %}
+            <div class="errores">{{ form.non_field_errors }}</div>
+        {% endif %}
+
         <form method="post" novalidate id="form-movimiento">
             {% csrf_token %}
             {{ form.management_form }}
             {{ formset.management_form }}
 
-            {% include 'components/_form_fields.html' with form=form %}
+            <div class="campo">
+                {{ form.tipo_movimiento.label_tag }}
+                {{ form.tipo_movimiento }}
+                {% if form.tipo_movimiento.errors %}
+                    <div class="errores">{{ form.tipo_movimiento.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="campo">
+                {{ form.descripcion.label_tag }}
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}
+                    <div class="errores">{{ form.descripcion.errors }}</div>
+                {% endif %}
+            </div>
 
             <h3>Detalles del movimiento</h3>
             <div id="detalles-container">
                 {% for detalle_form in formset %}
                     <div class="detalle-fila" id="detalle-{{ forloop.counter0 }}">
-                        {% include 'components/_form_fields.html' with form=detalle_form %}
-                        {% if detalle_form.id %}
-                            <input type="hidden" name="{{ detalle_form.id.name }}" value="{{ detalle_form.id.value }}">
-                        {% endif %}
-                        <input type="hidden" name="{{ detalle_form.DELETE.name }}" value="{{ detalle_form.DELETE.value }}" class="delete-flag">
+                        <div class="campo">
+                            {{ detalle_form.variante.label_tag }}
+                            {{ detalle_form.variante }}
+                        </div>
+                        <div class="campo">
+                            {{ detalle_form.cantidad.label_tag }}
+                            {{ detalle_form.cantidad }}
+                        </div>
                         <button type="button" class="boton-outline remover-detalle">Quitar</button>
+                        {% if detalle_form.variante.errors or detalle_form.cantidad.errors %}
+                            <div class="errores">{{ detalle_form.variante.errors }}{{ detalle_form.cantidad.errors }}</div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -63,7 +87,6 @@
             <label for="id_detalles-__prefix__-cantidad">Cantidad</label>
             <input type="number" name="detalles-__prefix__-cantidad" id="id_detalles-__prefix__-cantidad" step="0.01" min="0">
         </div>
-        <input type="hidden" name="detalles-__prefix__-DELETE" value="false" class="delete-flag">
         <button type="button" class="boton-outline remover-detalle">Quitar</button>
     </template>
 
@@ -73,6 +96,9 @@
             var agregarBtn = document.getElementById('agregar-detalle');
             var totalInput = document.getElementById('id_detalles-TOTAL_FORMS');
 
+            // Django lee los campos por índice (detalles-0-*, detalles-1-*, ...) y corta
+            // en TOTAL_FORMS: sin índices contiguos y TOTAL_FORMS sincronizado, las filas
+            // agregadas se envían pero el servidor las ignora.
             function sincronizar() {
                 var filas = Array.prototype.slice.call(container.querySelectorAll('.detalle-fila'));
                 filas.forEach(function (fila, i) {
@@ -86,6 +112,7 @@
                     fila.querySelectorAll('label[for^="id_detalles-"]').forEach(function (lbl) {
                         lbl.htmlFor = lbl.htmlFor.replace(/^id_detalles-\d+-/, 'id_detalles-' + i + '-');
                     });
+                    // El movimiento siempre necesita al menos una línea de detalle.
                     var quitar = fila.querySelector('.remover-detalle');
                     if (quitar) quitar.disabled = filas.length === 1;
                 });
@@ -105,12 +132,9 @@
             container.addEventListener('click', function (e) {
                 var btn = e.target.closest('.remover-detalle');
                 if (!btn) return;
-                var filas = container.querySelectorAll('.detalle-fila');
-                if (filas.length <= 1) return;
                 var fila = btn.closest('.detalle-fila');
-                var flag = fila.querySelector('.delete-flag');
-                if (flag) flag.value = 'true';
-                fila.style.display = 'none';
+                if (!fila || container.querySelectorAll('.detalle-fila').length === 1) return;
+                fila.remove();
                 sincronizar();
             });
 

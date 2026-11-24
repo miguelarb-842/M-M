@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
 
-{% block css_extra %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/components/modulos.css' %}">
-{% endblock %}
-
 {% block title %}Catálogo | Librería M&amp;M{% endblock %}
 
 {% block contenido %}
-    <section class="seccion">
+    <section class="catalogo">
         <div class="section-heading">
             <div>
                 <h1>Catálogo de productos</h1>
@@ -28,12 +23,11 @@
                         <th>Producto</th>
                         <th>Marca</th>
                         <th>Categoría</th>
-                        <th class="acciones-col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for producto in productos %}
-                        <tr>
+                        <tr class="fila-clickeable" data-url="{% url 'MyM:detalle_producto' producto.id_producto %}">
                             <td>
                                 <a href="{% url 'MyM:detalle_producto' producto.id_producto %}">
                                     {{ producto.nombre }}
@@ -41,9 +35,6 @@
                             </td>
                             <td>{{ producto.id_marca }}</td>
                             <td>{{ producto.id_categoria }}</td>
-                            <td>
-                                <a class="boton secundario" href="{% url 'MyM:detalle_producto' producto.id_producto %}">Ver</a>
-                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -55,4 +46,25 @@
             </div>
         {% endif %}
     </section>
+
+    <style>
+        .fila-clickeable {
+            cursor: pointer;
+        }
+        .fila-clickeable:hover {
+            background: #f5f7fa;
+        }
+    </style>
+
+    <script>
+        document.querySelectorAll('.fila-clickeable').forEach(function (fila) {
+            fila.addEventListener('click', function (e) {
+                if (e.target.closest('a, button')) return;
+                var url = fila.getAttribute('data-url');
+                if (url) {
+                    window.location = url;
+                }
+            });
+        });
+    </script>
 {% endblock %}

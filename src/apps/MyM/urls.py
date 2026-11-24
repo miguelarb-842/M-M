@@ -8,7 +8,7 @@ from .controllers.ventas import ventas
 from .controllers.compras import compras
 from .controllers.marca import registrar_marca
 from .controllers.categoria import registrar_categoria
-from .controllers.producto import registrar_producto
+from .controllers.producto import registrar_producto, editar_producto
 
 app_name = 'MyM'
 
@@ -21,6 +21,7 @@ urlpatterns = [
     path('catalogo/categoria/registrar/', registrar_categoria, name='registrar_categoria'),
     path('catalogo/producto/registrar/', registrar_producto, name='registrar_producto'),
     path('catalogo/producto/<int:pk>/', detalle_producto, name='detalle_producto'),
+    path('catalogo/producto/<int:pk>/editar/', editar_producto, name='editar_producto'),
     path('inventario/', inventario, name='inventario'),
     path('inventario/movimientos/', listar_movimientos, name='listar_movimientos'),
     path('inventario/movimiento/<int:movimiento_id>/', detalle_movimiento, name='detalle_movimiento'),

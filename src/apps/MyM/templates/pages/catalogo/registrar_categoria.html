@@ -23,9 +23,25 @@
             <div class="errores">{{ form.non_field_errors }}</div>
         {% endif %}
 
-        <form method="post" novalidate>
+        <form method="post" novalidate id="form-categoria">
             {% csrf_token %}
-            {% include 'components/_form_fields.html' with form=form %}
+            {{ form.management_form }}
+
+            <div class="campo">
+                {{ form.nombre.label_tag }}
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                    <div class="errores">{{ form.nombre.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="campo">
+                {{ form.descripcion.label_tag }}
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}
+                    <div class="errores">{{ form.descripcion.errors }}</div>
+                {% endif %}
+            </div>
 
             <div class="acciones">
                 <button class="boton" type="submit">Registrar categoría</button>

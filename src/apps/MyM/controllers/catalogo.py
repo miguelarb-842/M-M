@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from .home import acceso_requerido
-from ..models import Producto, Variante
+from ..models import Producto, Variante, Inventario
 
 
 @acceso_requerido
@@ -21,7 +21,12 @@ def detalle_producto(request, pk):
         pk=pk,
     )
     variantes = Variante.objects.filter(id_producto=producto)
+    inventarios = {
+        inv.id_variante_id: inv
+        for inv in Inventario.objects.filter(id_variante__in=variantes)
+    }
     return render(request, 'pages/catalogo/detalle.html', {
         'producto': producto,
         'variantes': variantes,
+        'inventarios': inventarios,
     })

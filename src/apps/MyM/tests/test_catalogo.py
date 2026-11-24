@@ -63,8 +63,8 @@ class CatalogoServiceTest(TestCase):
         producto = producto_service.crear_producto_con_variantes(
             marca, categoria, 'Laptop', 'Laptop de prueba',
             [
-                {'nombre': '14 pulgadas', 'descripcion': 'Pantalla 14"'},
-                {'nombre': '16 pulgadas', 'descripcion': 'Pantalla 16"'},
+                {'nombre': '14 pulgadas', 'descripcion': 'Pantalla 14"', 'stock_minimo': Decimal('5')},
+                {'nombre': '16 pulgadas', 'descripcion': 'Pantalla 16"', 'stock_minimo': Decimal('10')},
             ],
             self.usuario,
         )
@@ -79,12 +79,75 @@ class CatalogoServiceTest(TestCase):
         self.assertTrue(variantes.filter(nombre='14 pulgadas').exists())
         self.assertTrue(variantes.filter(nombre='16 pulgadas').exists())
 
-        # Cada variante tiene su registro de inventario con stock 0
+        # Cada variante tiene su registro de inventario con su stock mínimo
+        stock_por_variante = {
+            '14 pulgadas': Decimal('5'),
+            '16 pulgadas': Decimal('10'),
+        }
         for variante in variantes:
             inventario = Inventario.objects.get(id_variante=variante)
             self.assertEqual(inventario.stock_actual, Decimal('0'))
-            self.assertEqual(inventario.stock_minimo, Decimal('0'))
+            self.assertEqual(inventario.stock_minimo, stock_por_variante[variante.nombre])
             self.assertEqual(inventario.creado_por, self.usuario)
+
+    def test_stock_minimo_por_defecto_es_cero(self):
+        """Si no se indica stock mínimo, el inventario de la variante queda en 0."""
+        marca = Marca.objects.create(nombre='Marca Z', creado_por=self.usuario)
+        categoria = Categoria.objects.create(nombre='Categoria Z', creado_por=self.usuario)
+
+        producto = producto_service.crear_producto_con_variantes(
+            marca, categoria, 'Teclado', 'Teclado mecánico',
+            [{'nombre': 'Español', 'descripcion': 'Layout ES'}],
+            self.usuario,
+        )
+
+        inventario = Inventario.objects.get(id_variante__id_producto=producto)
+        self.assertEqual(inventario.stock_minimo, Decimal('0'))
+        self.assertEqual(inventario.stock_actual, Decimal('0'))
+
+    def test_editar_producto_con_variantes(self):
+        """Se edita producto, variantes existentes y se agregan nuevas sin eliminar."""
+        marca = Marca.objects.create(nombre='Marca E', creado_por=self.usuario)
+        categoria = Categoria.objects.create(nombre='Categoria E', creado_por=self.usuario)
+
+        producto = producto_service.crear_producto_con_variantes(
+            marca, categoria, 'Monitor', 'Monitor LED',
+            [{'nombre': '24 pulgadas', 'descripcion': 'Full HD', 'stock_minimo': Decimal('3')}],
+            self.usuario,
+        )
+        variante = Variante.objects.get(id_producto=producto, nombre='24 pulgadas')
+
+        producto_service.editar_producto_con_variantes(
+            producto.id_producto,
+            marca, categoria, 'Monitor Pro', 'Monitor profesional',
+            [
+                {'id': variante.id_variante, 'nombre': '24 pulgadas', 'descripcion': 'Full HD IPS', 'stock_minimo': Decimal('8')},
+                {'nombre': '27 pulgadas', 'descripcion': '4K', 'stock_minimo': Decimal('5')},
+            ],
+            self.usuario,
+        )
+
+        producto.refresh_from_db()
+        self.assertEqual(producto.nombre, 'Monitor Pro')
+        self.assertEqual(producto.descripcion, 'Monitor profesional')
+
+        variantes = Variante.objects.filter(id_producto=producto)
+        self.assertEqual(variantes.count(), 2)
+        self.assertTrue(variantes.filter(nombre='24 pulgadas').exists())
+        self.assertTrue(variantes.filter(nombre='27 pulgadas').exists())
+
+        self.assertEqual(
+            Inventario.objects.get(id_variante__nombre='24 pulgadas').stock_minimo,
+            Decimal('8'),
+        )
+        self.assertEqual(
+            Inventario.objects.get(id_variante__nombre='27 pulgadas').stock_minimo,
+            Decimal('5'),
+        )
+        self.assertEqual(
+            Inventario.objects.get(id_variante__nombre='27 pulgadas').stock_actual,
+            Decimal('0'),
+        )
 
     def test_producto_con_una_variante(self):
         """Se puede crear un producto con una sola variante."""
